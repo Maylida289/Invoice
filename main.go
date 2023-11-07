@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Invoice/controllers"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -15,12 +16,12 @@ func main() {
 		}
 		return c.JSON(http.StatusOK, result)
 	})
-	// e.POST("/customers", controllers.CreateCustomer)
+	e.POST("/customers", controllers.CreateCustomer)
 
-	// // Rute untuk membuat rincian faktur
-	// e.POST("/invoice_details", controllers.CreateInvoiceDetail)
+	// Rute untuk membuat rincian faktur
+	e.POST("/invoice_details", controllers.CreateInvoice)
 
-	// // Rute untuk membuat item faktur
+	// Rute untuk membuat item faktur
 	// e.POST("/items", controllers.CreateItem)
-	e.Logger.Fatal(e.Start(":8067"))
+	e.Logger.Fatal(e.Start(":8062"))
 }
