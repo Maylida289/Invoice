@@ -2,12 +2,14 @@ package main
 
 import (
 	"Invoice/controllers"
+	"Invoice/db"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+	db.Init()
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
 		result := map[string]string{
@@ -16,12 +18,12 @@ func main() {
 		}
 		return c.JSON(http.StatusOK, result)
 	})
-	e.POST("/customers", controllers.CreateCustomer)
+	e.POST("/add/invoice", controllers.CreateInvoice)
 
 	// Rute untuk membuat rincian faktur
-	e.POST("/invoice_details", controllers.CreateInvoice)
+	e.GET("/invoice_details", controllers.GetInvoice)
 
 	// Rute untuk membuat item faktur
 	// e.POST("/items", controllers.CreateItem)
-	e.Logger.Fatal(e.Start(":8062"))
+	e.Logger.Fatal(e.Start(":8070"))
 }
