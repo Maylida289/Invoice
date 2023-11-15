@@ -32,10 +32,8 @@ func Init() {
 	if err != nil {
 		panic("database error")
 	}
-	db.AutoMigrate(&models.Invoice{}) //migrate schema
+	db.AutoMigrate(&models.Customer{}, models.Item{}) //migrate schema
 
-	db.Unscoped().Delete(&models.Customer{})
-	db.Unscoped().Delete(&models.Invoice_detail{})
 }
 func DBManager() *gorm.DB {
 	return db
