@@ -24,7 +24,7 @@ func Init() {
 		Username:     "root",
 		Password:     "",
 		Host:         "tcp(127.0.0.1:3306)",
-		DatabaseName: "pembayaran",
+		DatabaseName: "hargain",
 	}
 
 	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@%s/%s", config.Username, config.Password, config.Host, config.DatabaseName))
@@ -32,7 +32,22 @@ func Init() {
 	if err != nil {
 		panic("database error")
 	}
-	db.AutoMigrate(&models.Customer{}, models.Bayar{}) //migrate schema
+	db.AutoMigrate(&models.Customer{}, models.Harga{}, models.Quantity{}) //migrate schema
+
+	db.Delete(&Customers)
+	for key, _ := range Customers {
+		db.Create(&Customers[key])
+	}
+
+	db.Delete(&Quantitys)
+	for key, _ := range Quantitys {
+		db.Create(&Quantitys[key])
+	}
+
+	db.Delete(&Hargas)
+	for key, _ := range Hargas {
+		db.Create(&Hargas[key])
+	}
 
 }
 func DBManager() *gorm.DB {
